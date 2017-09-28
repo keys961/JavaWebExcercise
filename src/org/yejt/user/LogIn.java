@@ -19,7 +19,7 @@ public class LogIn extends HttpServlet
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
-        this.doPost(req, resp);
+        req.getRequestDispatcher("/login.jsp").forward(req, resp);
     }
 
     @Override
@@ -46,12 +46,12 @@ public class LogIn extends HttpServlet
                     setCookies(username, password, resp);
                     setSession(username, password, req);
                     resp.getWriter().print("<script>alert(\"Login success!\");" +
-                            "window.location.href=\"/user-page/problem-list.jsp\";</script>");
+                            "window.location.href=\"/MainPage\";</script>");
                 }
                 else
                 {
                     resp.getWriter().print("<script> alert(\"Username or password is not" +
-                            " correct! \"); window.location.href=\"/login.jsp\"; </script>");
+                            " correct! \"); window.location.href=\"/Login\"; </script>");
                 }
             }
         }

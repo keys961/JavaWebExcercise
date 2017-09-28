@@ -14,7 +14,7 @@
 <%
     //HttpSession httpSession = request.getSession();
     if(Utils.isLoggedIn(request))
-        response.getWriter().print("<script>window.location.href=\"/user-page/problem-list.jsp\";</script>");
+        response.getWriter().print("<script>window.location.href=\"/MainPage\";</script>");
     else
     {
         String username = null;
@@ -39,7 +39,7 @@
                     HttpSession httpSession = request.getSession();
                     httpSession.setAttribute("username", username);
                     httpSession.setAttribute("password", password);
-                    response.getWriter().print("<script>window.location.href=\"/user-page/problem-list.jsp\";</script>");
+                    response.getWriter().print("<script>window.location.href=\"/MainPage\";</script>");
                 }
             }
         }
@@ -66,7 +66,7 @@
                If you do not have an account here, please click the button below to sign up!
             </p>
             <p>
-              <a class="btn btn-primary btn-lg" href="./register.jsp">Sign Up NOW!</a>
+              <a class="btn btn-primary btn-lg" href="/Register">Sign Up NOW!</a>
             </p>
           </div>
         </div>

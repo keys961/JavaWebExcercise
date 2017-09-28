@@ -13,21 +13,21 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="./index.jsp">OJ</a>
+        <a class="navbar-brand" href="/">OJ</a>
     </div>
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
             <li class="active">
-                <a href="/login.jsp">Sign In</a>
+                <a href="/Login">Sign In</a>
             </li>
             <li>
-                <a href="/register.jsp">Sign Up</a>
+                <a href="/Register">Sign Up</a>
             </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <a href="#">Help</a>
+                <a href="/Help">Help</a>
             </li>
             <li>
                 <a href="#">    </a>

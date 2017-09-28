@@ -24,7 +24,9 @@ public class Register extends HttpServlet
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
-        this.doPost(req, resp);
+       // this.doPost(req, resp);
+        //retransmit request to a jsp page
+        req.getRequestDispatcher("/register.jsp").forward(req, resp);
     }
 
     @Override
@@ -53,13 +55,13 @@ public class Register extends HttpServlet
                    int i = statement.executeUpdate();
                    if(i > 0)
                         resp.getWriter().print("<script> alert(\"Register successfully!" +
-                           " \"); window.location.href=\"/login.jsp\"; </script>");
+                           " \"); window.location.href=\"/Login\"; </script>");
                    //resp.sendRedirect("/login.jsp");
                }
                else
                {
                    resp.getWriter().print("<script> alert(\"Username has already" +
-                           " been registered. \"); window.location.href=\"/register.jsp\"; </script>");
+                           " been registered. \"); window.location.href=\"/Register\"; </script>");
                    //resp.sendRedirect("/register.jsp");
                }
             }
