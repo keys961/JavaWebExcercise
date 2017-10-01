@@ -39,6 +39,7 @@
                     HttpSession httpSession = request.getSession();
                     httpSession.setAttribute("username", username);
                     httpSession.setAttribute("password", password);
+                    httpSession.setMaxInactiveInterval(3600);
                     response.getWriter().print("<script>window.location.href=\"/MainPage\";</script>");
                 }
             }

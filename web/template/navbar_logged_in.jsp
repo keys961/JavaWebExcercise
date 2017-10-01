@@ -5,6 +5,10 @@
   Time: 16:47
   To change this template use File | Settings | File Templates.
 --%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    String username = (String)request.getSession().getAttribute("username");
+%>
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="navbar-header">
         <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -19,7 +23,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
             <li class="active">
-                <a href="#">Username</a>
+                <a href="#"><%=username%></a>
             </li>
             <li>
                 <a href="/Logout">Logout</a>

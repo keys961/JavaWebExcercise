@@ -11,6 +11,19 @@
         response.getWriter().print("<script> alert(\"You have not logged" +
                 " in! \"); window.location.href=\"/Login\"; </script>");
 %>
+
+<%
+    String cmd = request.getParameter("page");
+    String ref = "";
+    if(cmd == null || cmd.equals("question"))
+        ref = "problem-list.jsp";
+    else if(cmd.equals("history"))
+        ref = "submit-list.jsp";
+    else if(cmd.equals("rank"))
+        ref = "rank-list.jsp";
+    else
+        ref = "problem-list.jsp";
+%>
 <html>
 <head>
     <title>Welcome</title>
@@ -23,28 +36,18 @@
         <div class="col-md-3 col-lg-3">
             <ul class="nav nav-list well">
                 <li class="active">
-                    <a href="#">Questions</a>
+                    <a href="/MainPage?page=question">Questions</a>
                 </li>
                 <li>
-                    <a href="#">Submit History</a>
+                    <a href="/MainPage?page=history">Submit History</a>
                 </li>
                 <li>
-                    <a href="#">Ranking</a>
+                    <a href="/MainPage?page=rank">Ranking</a>
                 </li>
             </ul>
         </div>
         <div class="col-md-9 col-lg-9">
-            <div class="list-group">
-                <a class="list-group-item active" href="#">Questions</a>
-                <div class="list-group-item">
-                    <h4 class="list-group-item-heading">
-                        Question 01
-                    </h4>
-                    <p class="list-group-item-text">
-                        Hello World!
-                    </p>
-                </div>
-            </div>
+            <jsp:include page="<%=ref%>"/>
         </div>
     </div>
 </div>

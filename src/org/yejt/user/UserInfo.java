@@ -1,4 +1,6 @@
 package org.yejt.user;
 
-public class UserInfo {
+public class UserInfo
+{
+
 }

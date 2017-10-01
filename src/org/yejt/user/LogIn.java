@@ -75,6 +75,7 @@ public class LogIn extends HttpServlet
     private void setSession(String username, String password, HttpServletRequest req)
     {
         HttpSession session = req.getSession();
+        session.setMaxInactiveInterval(3600);
         session.setAttribute("username", username);
         session.setAttribute("password", password);
     }
