@@ -23,7 +23,7 @@
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
             <li class="active">
-                <a href="#"><%=username%></a>
+                <a href="/UserInfo"><%=username%></a>
             </li>
             <li>
                 <a href="/Logout">Logout</a>

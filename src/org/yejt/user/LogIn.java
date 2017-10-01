@@ -54,11 +54,15 @@ public class LogIn extends HttpServlet
                             " correct! \"); window.location.href=\"/Login\"; </script>");
                 }
             }
+            connection.close();
+            preparedStatement.close();
+            resultSet.close();
         }
         catch (SQLException e)
         {
             Logger.logMsg(Level.SEVERE.intValue(), "SQL Exception");
         }
+
 
     }
 

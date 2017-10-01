@@ -43,7 +43,10 @@
                     response.getWriter().print("<script>window.location.href=\"/MainPage\";</script>");
                 }
             }
+            resultSet.close();
         }
+        connection.close();
+        statement.close();
     }
 %>
 <html>

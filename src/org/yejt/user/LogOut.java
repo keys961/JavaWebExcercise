@@ -8,6 +8,11 @@ import java.io.IOException;
 @WebServlet("/Logout")
 public class LogOut extends HttpServlet
 {
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
+    {
+        doGet(req, resp);
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
@@ -25,6 +30,6 @@ public class LogOut extends HttpServlet
         session.removeAttribute("password");
 
         resp.getWriter().print("<script>alert(\"Logout success!\"); window.location.href=" +
-                "\"/index.jsp\";</script>");
+                "\"/\";</script>");
     }
 }

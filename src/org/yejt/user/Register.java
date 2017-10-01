@@ -64,6 +64,9 @@ public class Register extends HttpServlet
                            " been registered. \"); window.location.href=\"/Register\"; </script>");
                    //resp.sendRedirect("/register.jsp");
                }
+                connection.close();
+                statement.close();
+                resultSet.close();
             }
             catch (SQLException e)
             {

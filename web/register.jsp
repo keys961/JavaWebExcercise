@@ -51,7 +51,7 @@
             <div class="container">
                 <div class="jumbotron">
                     <div class="container">
-                        <form class="form-signin" method="POST" action="/Register" onsubmit="return check()">
+                        <form class="form-signin" method="POST" onsubmit="myCheckForm()" action="/Register" >
                             <h1 class="form-signin-heading">Sign Up</h1>
                             <hr />
                             <div class="form-group">
@@ -80,14 +80,14 @@
 <hr>
 <jsp:include page="template/foot.jsp"/>
 <jsp:include page="template/include.jsp"/>
-<script src="./plugin/jquery-3.2.1.min.js"></script>
-<script>
+<script type="javascript">
     //TODO: Cannot use jQuery
-    function check() //Cannot use!!
+    function myCheckForm() //Cannot use!!
     {
-        var username = jQuery("#id_reg").text();
-        var password = jQuery("#id_password").text();
-        var pwdAgain = jQuery("#id_password_again").text();
+        //alert("Test")
+        var username = document.getElementById("id_reg").textContent;
+        var password = document.getElementById("id_password").textContent;
+        var pwdAgain = document.getElementById("id_password_again").textContent;
 
         if(username.length >= 20)
         {
