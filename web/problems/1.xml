@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<problem>
+    <title>Hello World</title>
+    <body>Just output the text "Hello World." in a single line.</body>
+    <input>No input</input>
+    <output>Hello World.</output>
+</problem>

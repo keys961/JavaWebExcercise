@@ -41,9 +41,6 @@
                 <li>
                     <a href="/MainPage?page=history">Submit History</a>
                 </li>
-                <li>
-                    <a href="/MainPage?page=rank">Ranking</a>
-                </li>
             </ul>
         </div>
         <div class="col-md-9 col-lg-9">

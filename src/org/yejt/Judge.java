@@ -12,11 +12,11 @@ public class Judge implements Callable<Judge.Status>
 
         private int statusCode;
 
-        Status(boolean isPassed, String msg, int statusCode)
+        Status(boolean isPassed, int statusCode)
         {
             this.isPassed = isPassed;
-            this.msg = msg;
             this.statusCode = statusCode;
+            setMsg(statusCode);
         }
 
         public String getMsg()
@@ -33,6 +33,8 @@ public class Judge implements Callable<Judge.Status>
         {
             return this.statusCode;
         }
+
+
     }
 
     private String code;
@@ -50,5 +52,30 @@ public class Judge implements Callable<Judge.Status>
     {
         //TODO
         return null;//Do test
+    }
+
+    public static String setMsg(int statusCode)
+    {
+        String msg = "";
+        switch (statusCode)
+        {
+            case 0:
+                msg = "AC"; break;
+            case 1:
+                msg = "WA"; break;
+            case 2:
+                msg = "TLE"; break;
+            case 3:
+                msg = "MLE"; break;
+            case 4:
+                msg = "RE"; break;
+            case 5:
+                msg = "OLE"; break;
+            case 6:
+                msg = "CE"; break;
+            default:
+                msg = "Unknown Error"; break;
+        }
+        return msg;
     }
 }
