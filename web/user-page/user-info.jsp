@@ -1,4 +1,7 @@
-<%@ page import="org.yejt.contract.Utils" %><%--
+<%@ page import="org.yejt.contract.Utils" %>
+<%@ page import="org.yejt.contract.DatabaseContract" %>
+<%@ page import="javax.xml.transform.Result" %>
+<%@ page import="java.sql.*" %><%--
   Created by IntelliJ IDEA.
   User: Yejt
   Date: 2017/10/1 0001
@@ -13,7 +16,61 @@
 %>
 
 <%
-    //TODO: Update User info
+    Connection connection = DatabaseContract.getConnection();
+    PreparedStatement statement = null;
+    Statement statement1 = null;
+    ResultSet resultSet = null;
+    int totalProblemNum = 0;
+    int finishedProblem = 0;
+    int totalUser = 0;
+    int rank = 0;
+    try
+    {
+        String query = "SELECT COUNT(DISTINCT pid) FROM submit WHERE username = ? AND status = 0";
+        statement = connection.prepareStatement(query);
+        statement.setString(1, (String)request.getSession().getAttribute("username"));
+        resultSet = statement.executeQuery();
+        if(resultSet.next())
+            finishedProblem = resultSet.getInt(1);
+
+        query = "SELECT COUNT(DISTINCT id) FROM problem";
+        statement1 = connection.createStatement();
+        resultSet = statement1.executeQuery(query);
+        //resultSet = statement.executeQuery();
+        if(resultSet.next())
+            totalProblemNum = resultSet.getInt(1);
+
+        query = "SELECT COUNT(DISTINCT username) FROM user";
+        statement1 = connection.createStatement();
+        resultSet = statement1.executeQuery(query);
+        if(resultSet.next())
+            totalUser = resultSet.getInt(1);
+
+        query = "SELECT * FROM\n" +
+                "  (SELECT username, @curRank := @curRank + 1 AS rank\n" +
+                "   FROM\n" +
+                "     (SELECT user.username, COUNT(DISTINCT pid) AS count\n" +
+                "      FROM user LEFT JOIN\n" +
+                "        (SELECT * FROM submit WHERE status = 0) valid_submit\n" +
+                "          ON user.username = valid_submit.username\n" +
+                "      GROUP BY (user.username) DESC) AS ranklist,\n" +
+                "     (SELECT @curRank := 0) q) p\n" +
+                "where username = ?";
+        statement = connection.prepareStatement(query);
+        statement.setString(1, (String)request.getSession().getAttribute("username"));
+        resultSet = statement.executeQuery();
+        if(resultSet.next())
+            rank = resultSet.getInt(2);
+
+        connection.close();
+        statement.close();
+        statement1.close();
+        resultSet.close();
+    }
+    catch (SQLException e)
+    {
+        e.printStackTrace();
+    }
 %>
 <html>
 <head>
@@ -28,11 +85,17 @@
 
             <div class="row placeholders">
                 <div class="col-xs-6 col-sm-3 placeholder">
-                    <img class="img-responsive" alt="<%%>" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48cmVjdCBmaWxsPSIjMGQ4ZmRiIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgLz48dGV4dCBzdHlsZT0iZmlsbDojZmZmO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1zaXplOjEzcHg7Zm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgeD0iMTAwIiB5PSIxMDAiPjIwMHgyMDA8L3RleHQ+PC9zdmc+" data-src="holder.js/200x200/auto/sky">
+                    <label>
+                        <h4><%=finishedProblem%>/<%=totalProblemNum%></h4>
+                    </label>
+                    <hr>
                     <h3>Progress</h3>
                 </div>
                 <div class="col-xs-6 col-sm-3 placeholder">
-                    <img class="img-responsive" alt="" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48cmVjdCBmaWxsPSIjMzlkYmFjIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCIgLz48dGV4dCBzdHlsZT0iZmlsbDojMUUyOTJDO2ZvbnQtd2VpZ2h0OmJvbGQ7Zm9udC1zaXplOjEzcHg7Zm9udC1mYW1pbHk6QXJpYWwsSGVsdmV0aWNhLHNhbnMtc2VyaWY7ZG9taW5hbnQtYmFzZWxpbmU6Y2VudHJhbCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgeD0iMTAwIiB5PSIxMDAiPjIwMHgyMDA8L3RleHQ+PC9zdmc+" data-src="holder.js/200x200/auto/vine">
+                    <label>
+                        <h4><%=rank%>/<%=totalUser%></h4>
+                    </label>
+                    <hr>
                     <h3>Rank</h3>
                 </div>
             </div>

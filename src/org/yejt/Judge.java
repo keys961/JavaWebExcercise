@@ -10,10 +10,13 @@ public class Judge implements Callable<Judge.Status>
 
         private String msg;
 
-        Status(boolean isPassed, String msg)
+        private int statusCode;
+
+        Status(boolean isPassed, String msg, int statusCode)
         {
             this.isPassed = isPassed;
             this.msg = msg;
+            this.statusCode = statusCode;
         }
 
         public String getMsg()
@@ -24,6 +27,11 @@ public class Judge implements Callable<Judge.Status>
         public boolean isPassed()
         {
             return isPassed;
+        }
+
+        public int getStatusCode()
+        {
+            return this.statusCode;
         }
     }
 
