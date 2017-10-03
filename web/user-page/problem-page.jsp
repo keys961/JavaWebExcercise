@@ -117,7 +117,7 @@
             <pre><%=output%></pre>
             <br>
             <h2>Limitation</h2>
-            <p>Memory: 64MB, Time: 1000ms</p>
+            <p>Memory: 64MB, Time: 2000ms</p>
             <hr>
             <form class="">
                 <div class="form-group">
@@ -130,8 +130,6 @@
                                 <option value="GCC">C (gcc 4.9.2)</option>
                                 <option value="G++">C++ (g++ 4.9.2)</option>
                                 <option value="JAVAC">Java (javac 1.8)</option>
-                                <option value="PYTHON2">Python 2 (python 2.7)</option>
-                                <option value="PYTHON3">Python 3 (python 3.6)</option>
                             </select>
                         </div>
                     </div>

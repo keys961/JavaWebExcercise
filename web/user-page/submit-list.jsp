@@ -3,7 +3,7 @@
 <%@ page import="java.sql.ResultSet" %>
 <%@ page import="java.sql.Statement" %>
 <%@ page import="java.sql.SQLException" %>
-<%@ page import="org.yejt.Judge" %><%--
+<%@ page import="org.yejt.judge.Judge" %><%--
   Created by IntelliJ IDEA.
   User: Yejt
   Date: 2017/9/28 0028

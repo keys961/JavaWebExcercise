@@ -1,8 +1,8 @@
-package org.yejt;
+package org.yejt.judge;
 
 import java.util.concurrent.Callable;
 
-public class Judge
+public abstract class Judge
 {
     public class Status
     {
@@ -37,14 +37,11 @@ public class Judge
 
     }
 
-    private String code;
+    protected String code;
 
-    private int compiler;
-
-    public Judge(String code, int compiler)
+    protected Judge(String code)
     {
         this.code = code;
-        this.compiler = compiler;
     }
 
     public static String setMsg(int statusCode)
@@ -72,5 +69,5 @@ public class Judge
         return msg;
     }
 
-
+    public abstract Status judge();
 }
