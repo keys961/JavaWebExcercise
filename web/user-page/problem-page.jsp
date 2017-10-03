@@ -31,7 +31,6 @@
 %>
 
 <%
-//TODO: Show problem content using XML
     int id = Integer.parseInt(request.getParameter("id"));
     Connection connection = DatabaseContract.getConnection();
     Statement statement = null;
