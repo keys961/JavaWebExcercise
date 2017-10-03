@@ -39,9 +39,12 @@ public abstract class Judge
 
     protected String code;
 
-    protected Judge(String code)
+    protected String username;
+
+    protected Judge(String code, String username)
     {
         this.code = code;
+        this.username = username;
     }
 
     public static String setMsg(int statusCode)

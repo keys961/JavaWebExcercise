@@ -26,19 +26,20 @@ public class Question extends HttpServlet
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
+        String username = (String)req.getSession().getAttribute("username");
         String compiler = req.getParameter("compiler");
         Judge judge = null;
         Judge.Status res = null;
         switch (compiler)
         {
             case "GCC":
-                judge = new CJudge(req.getParameter("code"));
+                judge = new CJudge(req.getParameter("code"), username);
                 break;
             case "G++":
-                judge = new CppJudge(req.getParameter("code"));
+                judge = new CppJudge(req.getParameter("code"), username);
                 break;
             case "JAVAC":
-                judge = new JavaJudge(req.getParameter("code"));
+                judge = new JavaJudge(req.getParameter("code"), username);
                 break;
         }
 
