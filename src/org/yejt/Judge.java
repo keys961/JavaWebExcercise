@@ -2,7 +2,7 @@ package org.yejt;
 
 import java.util.concurrent.Callable;
 
-public class Judge implements Callable<Judge.Status>
+public class Judge
 {
     public class Status
     {
@@ -47,13 +47,6 @@ public class Judge implements Callable<Judge.Status>
         this.compiler = compiler;
     }
 
-    @Override
-    public Judge.Status call() throws Exception
-    {
-        //TODO
-        return null;//Do test
-    }
-
     public static String setMsg(int statusCode)
     {
         String msg = "";
@@ -78,4 +71,6 @@ public class Judge implements Callable<Judge.Status>
         }
         return msg;
     }
+
+
 }

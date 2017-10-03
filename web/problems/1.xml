@@ -2,7 +2,7 @@
 <problem>
     <title>Hello World</title>
     <body>Just output the text "Hello World." in a single line.</body>
-    <img></img>
+    <body>Do not make any extra works!</body>
     <input>No input</input>
     <output>Hello World.</output>
 </problem>
