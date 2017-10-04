@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 @WebServlet("/Question")
 public class Question extends HttpServlet
@@ -26,25 +29,46 @@ public class Question extends HttpServlet
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
+        Date date = new Date(System.currentTimeMillis());
         String username = (String)req.getSession().getAttribute("username");
         String compiler = req.getParameter("compiler");
+        int pid = Integer.parseInt(req.getParameter("pid"));
         Judge judge = null;
         Judge.Status res = null;
         switch (compiler)
         {
             case "GCC":
-                judge = new CJudge(req.getParameter("code"), username);
+                judge = new CJudge(req.getParameter("code"), username, pid);
                 break;
             case "G++":
-                judge = new CppJudge(req.getParameter("code"), username);
+                judge = new CppJudge(req.getParameter("code"), username, pid);
                 break;
             case "JAVAC":
-                judge = new JavaJudge(req.getParameter("code"), username);
+                judge = new JavaJudge(req.getParameter("code"), username, pid);
                 break;
+            default:
+                judge = new CppJudge(req.getParameter("code"), username, pid);
         }
 
-        if(judge != null)
-            res = judge.judge();
+
+        res = judge.judge();
+
+        Connection connection = DatabaseContract.getConnection();
+        PreparedStatement statement = null;
+        try
+        {
+            statement = connection.prepareStatement("INSERT INTO submit VALUES (?,?,?,?,?)");
+            statement.setString(1, username);
+            statement.setInt(2, pid);
+            statement.setInt(3, res.getStatusCode());
+            statement.setDate(4, date);
+            statement.setString(5, compiler);
+            statement.executeUpdate();
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
 
         resp.getWriter().write(res.getMsg());
     }

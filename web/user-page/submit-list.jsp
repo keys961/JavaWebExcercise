@@ -82,6 +82,7 @@
                 <th>Problem ID</th>
                 <th>Status</th>
                 <th>Submit Date</th>
+                <th>Language</th>
             </tr>
             </thead>
             <tbody>
@@ -97,6 +98,7 @@
                 <td><%=set.getString(2)%></td>
                 <td><%=Judge.setMsg(set.getInt(3))%></td>
                 <td><%=set.getString(4)%></td>
+                <td><%=set.getString(5)%></td>
             </tr>
             <%
                     }
