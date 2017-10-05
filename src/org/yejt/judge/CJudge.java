@@ -72,7 +72,7 @@ public class CJudge extends Judge
                 //Run
                 //TODO: Redirect problem
                 Process execProcess = Runtime.getRuntime().exec(new String[]{"docker", "exec", containerId,
-                        "timeout", "1s", "./" + filename, "0<" + pid + "t.txt", "1>res.txt"});
+                        "timeout", "1s", "./" + filename, "0<" + pid + "t.txt", "1>resc.txt"});
                 execProcess.waitFor();
                 int exitVal = execProcess.exitValue();
                 if (exitVal == 124)
@@ -82,7 +82,7 @@ public class CJudge extends Judge
                 else
                 {
                     Process diffProcess = Runtime.getRuntime().exec(new String[]{"docker", "exec", containerId,
-                            "diff", pid + "a.txt", "res.txt"});
+                            "diff", pid + "a.txt", "resc.txt"});
                     diffProcess.waitFor();
                     if (diffProcess.exitValue() == 0)
                         status = new Status(true, 0);
