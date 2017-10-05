@@ -1,6 +1,8 @@
 package org.yejt.judge;
 
 import java.io.*;
+import java.nio.charset.Charset;
+import java.util.Arrays;
 import java.util.Date;
 
 public class CJudge extends Judge
@@ -13,18 +15,20 @@ public class CJudge extends Judge
     @Override
     public Status judge()
     {
-        //TODO: Back-end Judgement
         //Write file of code
+        Status status = null;
         String path = null;
         String codePath = null;
         String testcasePath = null;
         String answerPath = null;
+        String filename = username + new Date().getTime();
+        String containerId = "";
         try
         {
             path = new File("").getCanonicalPath();
-            codePath = path + "\\web\\submit\\" + username + new Date().getTime() + ".c";
-            testcasePath = path + "\\web\\submit\\" + pid + ".txt";
-            answerPath = path + "\\web\\submit\\" + pid + ".txt";
+            codePath = path + "\\web\\submit\\" + filename + ".c";
+            testcasePath = path + "\\web\\testcase\\" + pid + ".txt";
+            answerPath = path + "\\web\\answers\\" + pid + ".txt";
             File file = new File(codePath);
             if(!file.exists())
                 file.createNewFile();
@@ -40,6 +44,54 @@ public class CJudge extends Judge
 
         try
         {
+            Process runProcess = Runtime.getRuntime().exec(new String[]{"docker", "run", "-itd", "-m", "64m", "yejt/oj"});
+            runProcess.waitFor();
+            byte[] content = new byte[128];
+            InputStream in = runProcess.getInputStream();
+            int len = in.read(content);
+            containerId = new String(content, Charset.forName("UTF-8")).substring(0, 12);
+            in.close();
+            //Copy
+            runProcess = Runtime.getRuntime().exec(new String[]{"docker", "cp", codePath, containerId + ":/" + filename + ".c"});
+            runProcess.waitFor();
+            runProcess = Runtime.getRuntime().exec(new String[]{"docker", "cp", answerPath, containerId + ":/" + pid + "a.txt"});
+            runProcess.waitFor();
+            runProcess = Runtime.getRuntime().exec(new String[]{"docker", "cp", testcasePath, containerId + ":/" + pid + "t.txt"});
+            runProcess.waitFor();
+            runProcess = Runtime.getRuntime().exec(new String[]{"docker", "exec", containerId, "dos2unix", pid + "a.txt", pid + "t.txt"});
+            runProcess.waitFor();
+            runProcess.destroy();
+            //Compile
+            Process compileProcess = Runtime.getRuntime().exec(new String[]{"docker", "exec", containerId,
+                "gcc", "-std=c99", filename + ".c", "-o" + filename});
+            compileProcess.waitFor();
+            if(compileProcess.exitValue() != 0)//Compile error
+                status = new Status(false, 6);
+            else
+            {
+                //Run
+                //TODO: Redirect problem
+                Process execProcess = Runtime.getRuntime().exec(new String[]{"docker", "exec", containerId,
+                        "timeout", "1s", "./" + filename, "0<" + pid + "t.txt", "1>res.txt"});
+                execProcess.waitFor();
+                int exitVal = execProcess.exitValue();
+                if (exitVal == 124)
+                    status = new Status(false, 2);
+                else if (exitVal != 0)
+                    status = new Status(false, 4);
+                else
+                {
+                    Process diffProcess = Runtime.getRuntime().exec(new String[]{"docker", "exec", containerId,
+                            "diff", pid + "a.txt", "res.txt"});
+                    diffProcess.waitFor();
+                    if (diffProcess.exitValue() == 0)
+                        status = new Status(true, 0);
+                    else if(diffProcess.exitValue() == 1)
+                        status = new Status(false, 1);
+                    else
+                        status = new Status(false, 7);
+                }
+            }
 
         }
         catch (Exception e)
@@ -47,72 +99,24 @@ public class CJudge extends Judge
             e.printStackTrace();
         }
 
-        return null;
-
+        if(status == null)
+            status = new Status(false, 7);
+        try
+        {
+            Process p = Runtime.getRuntime().exec(new String[]{"docker", "stop", containerId});
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return status;
     }
 
     public static void main(String[] args)
     {
-        try
-        {
-            Process p = Runtime.getRuntime().exec("docker version");
-            p.waitFor();
-//            Process process = Runtime.getRuntime().exec("docker images");
-//            process.waitFor();
-            System.out.println(p.exitValue());
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-//        String path = null;
-//        try
-//        {
-//            path = new File("").getCanonicalPath();
-//            path += "\\web\\submit\\" + "keys961" + new Date().getTime() + ".c";
-//            File file = new File(path);
-//            if(!file.exists())
-//                file.createNewFile();
-//
-//            PrintWriter writer = new PrintWriter(file);
-//            writer.write("#include <stdio.h> int main(){return 0;}");
-//            writer.close();
-//        }
-//        catch (IOException e)
-//        {
-//            e.printStackTrace();
-//        }
-//        try
-//        {
-//            Process p = Runtime.getRuntime().exec("docker ps");
-//            p.waitFor();
-//            System.out.println(p.exitValue());
-//        }
-//        catch (Exception e)
-//        {
-//            e.printStackTrace();
-//        }
-//        File directory = new File("");// 参数为空
-//        try
-//        {
-//            String courseFile = directory.getCanonicalPath();
-//            System.out.println(courseFile);
-//        }
-//        catch (IOException e)
-//        {
-//            e.printStackTrace();
-//        }
-
-//        String path;
-//        try
-//        {
-//            path = new File("").getCanonicalPath();
-//            path += "\\web\\submit\\";
-//            System.out.println(path);
-//        }
-//        catch (IOException e)
-//        {
-//            e.printStackTrace();
-//        }
+        String code = "#include<stdio.h>\n int main(){printf(\"Hello World.\\n\"); return 0;}";
+        CJudge judge = new CJudge(code, "keys961", 1);
+        Status status = judge.judge();
+        System.out.println(status.getStatusCode());
     }
 }
