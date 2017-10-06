@@ -16,7 +16,7 @@ public abstract class Judge
         {
             this.isPassed = isPassed;
             this.statusCode = statusCode;
-            setMsg(statusCode);
+            this.msg = setMsg(statusCode);
         }
 
         public String getMsg()

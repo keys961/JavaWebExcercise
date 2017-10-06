@@ -16,6 +16,8 @@ import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.text.spi.DateFormatSymbolsProvider;
 
 @WebServlet("/Question")
 public class Question extends HttpServlet
@@ -29,7 +31,10 @@ public class Question extends HttpServlet
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
-        Date date = new Date(System.currentTimeMillis());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //Date sqlDate = new Date(date.getTime());
+        java.util.Date date = new java.util.Date();
+
         String username = (String)req.getSession().getAttribute("username");
         String compiler = req.getParameter("compiler");
         int pid = Integer.parseInt(req.getParameter("pid"));
@@ -61,7 +66,7 @@ public class Question extends HttpServlet
             statement.setString(1, username);
             statement.setInt(2, pid);
             statement.setInt(3, res.getStatusCode());
-            statement.setDate(4, date);
+            statement.setObject(4, sdf.format(date));
             statement.setString(5, compiler);
             statement.executeUpdate();
         }
@@ -72,4 +77,7 @@ public class Question extends HttpServlet
 
         resp.getWriter().write(res.getMsg());
     }
+
+
+
 }

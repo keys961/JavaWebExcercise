@@ -119,16 +119,16 @@
             <h2>Limitation</h2>
             <p>Memory: 64MB, Time: 2000ms</p>
             <hr>
-            <form class="">
+
                 <div class="form-group">
                     <div class="row">
                         <div class="col-md-3 col-lg-3">
                             <label class="">Compiler/Interpreter</label>
                         </div>
                         <div class="col-md-9 col-lg-9">
-                            <select name="compiler" class="form-control">
-                                <option value="GCC">C (gcc 4.9.2)</option>
-                                <option value="G++">C++ (g++ 4.9.2)</option>
+                            <select id="compiler" name="compiler" class="form-control">
+                                <option value="GCC">C (gcc 4.8)</option>
+                                <option value="G++">C++ (g++ 4.8)</option>
                                 <option value="JAVAC">Java (javac 1.8)</option>
                             </select>
                         </div>
@@ -143,19 +143,18 @@
                     <br>
                     <div class="row">
                         <div class="col-md-3 col-lg-3">
-                            <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+                            <button class="btn btn-primary" id="submit">Submit</button>
                         </div>
-                        <label id="status" style="font-size: large; margin-top: 6px; display: none">Status: Not Submitted</label>
+                        <label id="status" style="font-size: large; margin-top: 6px;">Status: Not Submitted</label>
                     </div>
                 </div>
-            </form>
+
         </div>
     </div>
 </div>
 
 
 <jsp:include page="/template/foot.jsp"/>
-</body>
 <jsp:include page="/template/include.jsp"/>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" type="text/javascript" charset="utf-8"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ext-language_tools.js" type="text/javascript" charset="utf-8"></script>
@@ -169,10 +168,21 @@
             (
                 function ()
                 {
-                        
+                    $.post("/Question",
+                        {
+                            username: "<%=(String)request.getSession().getAttribute("username")%>",
+                            code: $("#code").text(),
+                            compiler: $("#compiler").val(),
+                            pid: "<%=id%>"
+                        },
+                        function (data)
+                        {
+                            $("#status").text("Status: " + data);
+                        })
                 }
             );
         }
     );
 </script>
+</body>
 </html>

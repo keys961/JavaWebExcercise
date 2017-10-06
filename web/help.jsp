@@ -45,6 +45,9 @@
                     <p>
                         3. Click "Submit" to submit your code and wait for the result.
                     </p>
+                    <p>
+                        4. If you are using Java, please don't use "package", and set your class name as your username!
+                    </p>
                     <hr>
                     <h3>
                         Result that the OJ may return:
@@ -59,19 +62,13 @@
                         3. TLE: Time limit exceeded, your program ran too much time.
                     </p>
                     <p>
-                        4. MLE: Memory limit exceeded, your program used too much memory.
+                        4. RE: Runtime error, your program occurred runtime error.
                     </p>
                     <p>
-                        5. RE: Runtime error, your program occurred runtime error.
+                        5. CE: Compilation error, your code could not pass compilation.
                     </p>
                     <p>
-                        6. OLE: Output limit exceeded, your program outputted too much content.
-                    </p>
-                    <p>
-                        7. CE: Compilation error, your code could not pass compilation.
-                    </p>
-                    <p>
-                        8. Unknown Error: Your program occurred unknown error.
+                        6. Unknown Error: Your program occurred unknown error.
                     </p>
                 </div>
             </div>

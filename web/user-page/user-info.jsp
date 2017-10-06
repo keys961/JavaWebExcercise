@@ -40,27 +40,27 @@
         if(resultSet.next())
             totalProblemNum = resultSet.getInt(1);
 
-        query = "SELECT COUNT(DISTINCT username) FROM user";
-        statement1 = connection.createStatement();
-        resultSet = statement1.executeQuery(query);
-        if(resultSet.next())
-            totalUser = resultSet.getInt(1);
-
-        query = "SELECT * FROM\n" +
-                "  (SELECT username, @curRank := @curRank + 1 AS rank\n" +
-                "   FROM\n" +
-                "     (SELECT user.username, COUNT(DISTINCT pid) AS count\n" +
-                "      FROM user LEFT JOIN\n" +
-                "        (SELECT * FROM submit WHERE status = 0) valid_submit\n" +
-                "          ON user.username = valid_submit.username\n" +
-                "      GROUP BY (user.username) DESC) AS ranklist,\n" +
-                "     (SELECT @curRank := 0) q) p\n" +
-                "where username = ?";
-        statement = connection.prepareStatement(query);
-        statement.setString(1, (String)request.getSession().getAttribute("username"));
-        resultSet = statement.executeQuery();
-        if(resultSet.next())
-            rank = resultSet.getInt(2);
+//        query = "SELECT COUNT(DISTINCT username) FROM user";
+//        statement1 = connection.createStatement();
+//        resultSet = statement1.executeQuery(query);
+//        if(resultSet.next())
+//            totalUser = resultSet.getInt(1);
+//
+//        query = "SELECT * FROM\n" +
+//                "  (SELECT username, @curRank := @curRank + 1 AS rank\n" +
+//                "   FROM\n" +
+//                "     (SELECT user.username, COUNT(DISTINCT pid) AS count\n" +
+//                "      FROM user LEFT JOIN\n" +
+//                "        (SELECT * FROM submit WHERE status = 0) valid_submit\n" +
+//                "          ON user.username = valid_submit.username\n" +
+//                "      GROUP BY (user.username) DESC) AS ranklist,\n" +
+//                "     (SELECT @curRank := 0) q) p\n" +
+//                "where username = ?";
+//        statement = connection.prepareStatement(query);
+//        statement.setString(1, (String)request.getSession().getAttribute("username"));
+//        resultSet = statement.executeQuery();
+//        if(resultSet.next())
+//            rank = resultSet.getInt(2);
 
         connection.close();
         statement.close();
@@ -91,13 +91,13 @@
                     <hr>
                     <h3>Progress</h3>
                 </div>
-                <div class="col-xs-6 col-sm-3 placeholder">
-                    <label>
-                        <h4><%=rank%>/<%=totalUser%></h4>
-                    </label>
-                    <hr>
-                    <h3>Rank</h3>
-                </div>
+                <%--<div class="col-xs-6 col-sm-3 placeholder">--%>
+                    <%--<label>--%>
+                        <%--<h4><%=rank%>/<%=totalUser%></h4>--%>
+                    <%--</label>--%>
+                    <%--<hr>--%>
+                    <%--<h3>Rank</h3>--%>
+                <%--</div>--%>
             </div>
         </div>
     </div>

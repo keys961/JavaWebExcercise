@@ -24,13 +24,16 @@ public class CppJudge extends Judge
         String testcasePath = null;
         String answerPath = null;
         String filename = username + new Date().getTime();
+        String outputPath = "";
         String containerId = "";
         try
         {
-            path = new File("").getCanonicalPath();
-            codePath = path + "\\web\\submit\\" + filename + ".c";
+            //path = new File("").getCanonicalPath();
+            path = "E:\\Programming\\Java\\WebHelloWorld";
+            codePath = path + "\\web\\submit\\" + filename + ".cpp";
             testcasePath = path + "\\web\\testcase\\" + pid + ".txt";
             answerPath = path + "\\web\\answers\\" + pid + ".txt";
+            outputPath = path + "\\web\\outputs\\" + filename + ".txt";
             File file = new File(codePath);
             if(!file.exists())
                 file.createNewFile();
@@ -60,29 +63,34 @@ public class CppJudge extends Judge
             runProcess.waitFor();
             runProcess = Runtime.getRuntime().exec(new String[]{"docker", "cp", testcasePath, containerId + ":/" + pid + "t.txt"});
             runProcess.waitFor();
-            runProcess = Runtime.getRuntime().exec(new String[]{"docker", "exec", containerId, "dos2unix", pid + "a.txt", pid + "t.txt"});
-            runProcess.waitFor();
+//            runProcess = Runtime.getRuntime().exec(new String[]{"docker", "exec", containerId, "dos2unix", pid + "a.txt", pid + "t.txt"});
+//            runProcess.waitFor();
             runProcess.destroy();
             //Compile
             Process compileProcess = Runtime.getRuntime().exec(new String[]{"docker", "exec", containerId,
-                    "g++", "-std=c++11", filename + ".c", "-o" + filename});
+                    "g++", "-std=c++11", filename + ".cpp", "-o" + filename});
             compileProcess.waitFor();
             if(compileProcess.exitValue() != 0)//Compile error
                 status = new Status(false, 6);
             else
             {
-                Process execProcess = Runtime.getRuntime().exec(new String[]{"docker", "exec", containerId,
-                        "timeout", "1s", "./" + filename, "0<" + pid + "t.txt", "1>rescpp.txt"});
+                //Run
+                Process execProcess = Runtime.getRuntime().exec("cmd /c docker exec " + containerId +
+                        " ./" + filename + " <" + testcasePath + " >>" + outputPath);
                 execProcess.waitFor();
                 int exitVal = execProcess.exitValue();
+//                byte[] info = new byte[1024];
+//                InputStream inputStream = execProcess.getInputStream();
+//                inputStream.read(info);
+//                System.out.println(new String(info));
+                //inputStream.close();
                 if (exitVal == 124)
                     status = new Status(false, 2);
                 else if (exitVal != 0)
                     status = new Status(false, 4);
                 else
                 {
-                    Process diffProcess = Runtime.getRuntime().exec(new String[]{"docker", "exec", containerId,
-                            "diff", pid + "a.txt", "rescpp.txt"});
+                    Process diffProcess = Runtime.getRuntime().exec(new String[]{"fc", answerPath, outputPath});
                     diffProcess.waitFor();
                     if (diffProcess.exitValue() == 0)
                         status = new Status(true, 0);
@@ -104,11 +112,22 @@ public class CppJudge extends Judge
         try
         {
             Process p = Runtime.getRuntime().exec(new String[]{"docker", "stop", containerId});
+            p.waitFor();
+            p = Runtime.getRuntime().exec("docker rm " + containerId);
+            p.waitFor();
         }
         catch (Exception e)
         {
             e.printStackTrace();
         }
         return status;
+    }
+
+    public static void main(String[] args)
+    {
+        String code = "#include<iostream>\n int main(){std::cout<<\"Hello World.\\n\"; return 0;}";
+        CppJudge judge = new CppJudge(code, "keys961", 1);
+        Status status = judge.judge();
+        System.out.println(status.getStatusCode());
     }
 }

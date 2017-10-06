@@ -90,6 +90,7 @@
             </p>
         </a>
         <%
+                    set.next();
                 }
             }
             catch (Exception e)

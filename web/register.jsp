@@ -51,7 +51,7 @@
             <div class="container">
                 <div class="jumbotron">
                     <div class="container">
-                        <form class="form-signin" method="POST" onsubmit="myCheckForm()" action="/Register" >
+                        <form class="form-signin" method="POST" onsubmit="return myCheckForm()" action="/Register" >
                             <h1 class="form-signin-heading">Sign Up</h1>
                             <hr />
                             <div class="form-group">
@@ -80,14 +80,14 @@
 <hr>
 <jsp:include page="template/foot.jsp"/>
 <jsp:include page="template/include.jsp"/>
-<script type="javascript">
+<script>
     //TODO: Cannot use jQuery
     function myCheckForm() //Cannot use!!
     {
         //alert("Test")
-        var username = document.getElementById("id_reg").textContent;
-        var password = document.getElementById("id_password").textContent;
-        var pwdAgain = document.getElementById("id_password_again").textContent;
+        var username = $("#id_reg").text();
+        var password = $("#id_password").val();
+        var pwdAgain = $("#id_password_again").val();
 
         if(username.length >= 20)
         {
@@ -95,7 +95,8 @@
             return false;
         }
 
-        if(password.length < 6 && password.length > 20)
+
+        if(password.length < 6 || password.length > 20)
         {
             alert("The length of password should be in range of 6 to 19 (inclusive)!");
             return false;

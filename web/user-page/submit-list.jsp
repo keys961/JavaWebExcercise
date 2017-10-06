@@ -101,6 +101,7 @@
                 <td><%=set.getString(5)%></td>
             </tr>
             <%
+                        set.next();
                     }
                 }
                 catch(Exception e)

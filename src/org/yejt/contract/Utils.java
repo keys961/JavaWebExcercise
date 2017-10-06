@@ -12,6 +12,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -65,4 +66,7 @@ public class Utils
         }
         return strBuilder.toString();
     }
+
+
+
 }
