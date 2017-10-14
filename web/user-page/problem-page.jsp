@@ -60,7 +60,7 @@
 
     try
     {
-        String s = application.getRealPath("/");
+        String s = "E:\\Programming\\Java\\WebHelloWorld\\web";
         File file = new File(s + contentPath);
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
@@ -137,7 +137,7 @@
                     <div class="row">
                         <div class="col-md-12 col-lg-12">
                             <label>Your code:</label>
-                            <textarea name="code" id="code" cols="110" rows="40" wrap="hard" style="font-family: monospace"></textarea>
+                            <textarea class="form-control" name="code" id="code" cols="110" rows="40" wrap="hard" style="font-family: monospace"></textarea>
                         </div>
                     </div>
                     <br>

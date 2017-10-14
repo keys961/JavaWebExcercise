@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<problem><title>Simple Loop</title><input>The test contains several test cases. First give R for test&#13;
+for testing for R times. Then give N for each test case.&#13;
+&#13;
+Example:&#13;
+4 &#13;
+6 &#13;
+5 &#13;
+4 &#13;
+3 &#13;
+</input><output>According to the example:&#13;
+0 1 2 3 4 5 6&#13;
+0 1 2 3 4 5&#13;
+0 1 2 3 4&#13;
+0 1 2 3&#13;
+</output><body>Give a positive integer N, just output the number from 0 to N in a single line without a blank space in the end of a line.</body></problem>

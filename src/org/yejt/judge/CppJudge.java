@@ -75,7 +75,7 @@ public class CppJudge extends Judge
             else
             {
                 //Run
-                Process execProcess = Runtime.getRuntime().exec("cmd /c docker exec " + containerId +
+                Process execProcess = Runtime.getRuntime().exec("cmd /c docker exec -i" + containerId +
                         " ./" + filename + " <" + testcasePath + " >>" + outputPath);
                 execProcess.waitFor();
                 int exitVal = execProcess.exitValue();
@@ -90,6 +90,8 @@ public class CppJudge extends Judge
                     status = new Status(false, 4);
                 else
                 {
+                    Process p = Runtime.getRuntime().exec(new String[]{"dos2unix", answerPath});
+                    p.waitFor();
                     Process diffProcess = Runtime.getRuntime().exec(new String[]{"fc", answerPath, outputPath});
                     diffProcess.waitFor();
                     if (diffProcess.exitValue() == 0)

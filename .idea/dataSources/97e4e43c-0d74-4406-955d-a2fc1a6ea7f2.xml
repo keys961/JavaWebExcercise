@@ -37,66 +37,76 @@
       <Position>4</Position>
       <DataType>varchar(128)|0</DataType>
     </column>
-    <key id="21" parent="14" name="PRIMARY">
+    <column id="21" parent="14" name="testcase_link">
+      <Position>5</Position>
+      <DataType>varchar(20)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <key id="22" parent="14" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="22" parent="15" name="username">
+    <column id="23" parent="15" name="username">
       <Position>1</Position>
       <DataType>varchar(20)|0</DataType>
     </column>
-    <column id="23" parent="15" name="pid">
+    <column id="24" parent="15" name="pid">
       <Position>2</Position>
       <DataType>int(11)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="24" parent="15" name="status">
+    <column id="25" parent="15" name="status">
       <Position>3</Position>
       <DataType>int(11)|0</DataType>
     </column>
-    <column id="25" parent="15" name="submit_time">
+    <column id="26" parent="15" name="submit_time">
       <Position>4</Position>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="26" parent="15" name="username">
+    <column id="27" parent="15" name="language">
+      <Position>5</Position>
+      <DataType>varchar(20)|0</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <index id="28" parent="15" name="username">
       <ColNames>username</ColNames>
     </index>
-    <key id="27" parent="15" name="PRIMARY">
+    <key id="29" parent="15" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>pid
 submit_time</ColNames>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="28" parent="15" name="submit_ibfk_2">
+    <foreign-key id="30" parent="15" name="submit_ibfk_2">
       <ColNames>username</ColNames>
       <RefSchemaName>online_judge</RefSchemaName>
       <RefTableName>user</RefTableName>
       <RefColNames>username</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="29" parent="15" name="submit_ibfk_1">
+    <foreign-key id="31" parent="15" name="submit_ibfk_1">
       <ColNames>pid</ColNames>
       <RefSchemaName>online_judge</RefSchemaName>
       <RefTableName>problem</RefTableName>
       <RefColNames>id</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="30" parent="16" name="username">
+    <column id="32" parent="16" name="username">
       <Position>1</Position>
       <DataType>varchar(20)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="31" parent="16" name="password">
+    <column id="33" parent="16" name="password">
       <Position>2</Position>
       <DataType>varchar(32)|0</DataType>
     </column>
-    <column id="32" parent="16" name="category">
+    <column id="34" parent="16" name="category">
       <Position>3</Position>
       <DataType>int(11)|0</DataType>
     </column>
-    <key id="33" parent="16" name="PRIMARY">
+    <key id="35" parent="16" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>username</ColNames>
       <Primary>1</Primary>

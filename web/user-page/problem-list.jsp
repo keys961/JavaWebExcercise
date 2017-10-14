@@ -73,6 +73,7 @@
 <div class="list-group">
     <a class="list-group-item active" href="#">Questions</a>
     <div class="list-group-item">
+        <br>
         <%
             try
             {
@@ -81,6 +82,7 @@
                 for(int i = (currentPage - 1) * 25 + 1; i <= size; i++)
                 {
         %>
+
         <a href="/Question?id=<%=i%>">
             <h4 class="list-group-item-heading">
                 Question <%=i%>
@@ -89,6 +91,7 @@
                 <%=set.getString(2)%>
             </p>
         </a>
+        <br>
         <%
                     set.next();
                 }

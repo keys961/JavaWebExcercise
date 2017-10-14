@@ -82,7 +82,7 @@
                 for(int i = (currentPage - 1) * 25 + 1; i <= size; i++)
                 {
         %>
-        <a href="/Question?id=<%=i%>">
+        <a href="/AdminHome/ModifyProblem?id=<%=i%>">
             <h4 class="list-group-item-heading">
                 Question <%=i%>
             </h4>

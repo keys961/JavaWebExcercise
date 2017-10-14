@@ -73,8 +73,10 @@ public class CJudge extends Judge
             else
             {
                 //Run
-                Process execProcess = Runtime.getRuntime().exec("cmd /c docker exec " + containerId +
-                 " ./" + filename + " <" + testcasePath + " >>" + outputPath);
+                Process p = Runtime.getRuntime().exec(new String[]{"dos2unix", answerPath});
+                p.waitFor();
+                Process execProcess = Runtime.getRuntime().exec("cmd /c docker exec -i " + containerId +
+                 " ./" + filename + " <" + testcasePath + " >" + outputPath);
                 execProcess.waitFor();
                 int exitVal = execProcess.exitValue();
                 byte[] info = new byte[1024];
