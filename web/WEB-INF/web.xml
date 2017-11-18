@@ -11,4 +11,15 @@
         <!--<servlet-name>org.yejt.test.HelloWorld</servlet-name>-->
         <!--<url-pattern>/hello_world</url-pattern>-->
     <!--</servlet-mapping>-->
+
+    <filter>
+        <filter-name>RegFilter</filter-name>
+        <filter-class>org.yejt.filter.RegFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>RegFilter</filter-name>
+        <url-pattern>/Register</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+    </filter-mapping>
+
 </web-app>
