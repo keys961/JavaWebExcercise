@@ -41,6 +41,7 @@ public class JavaJudge extends Judge
 
             PrintWriter writer = new PrintWriter(file);
             writer.write(code);
+            writer.flush();
             writer.close();
         }
         catch (IOException e)

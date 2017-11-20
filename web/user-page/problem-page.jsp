@@ -120,34 +120,34 @@
             <p>Memory: 64MB, Time: 2000ms</p>
             <hr>
 
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-md-3 col-lg-3">
-                            <label class="">Compiler/Interpreter</label>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-md-3 col-lg-3">
+                                <label class="">Compiler/Interpreter</label>
+                            </div>
+                            <div class="col-md-9 col-lg-9">
+                                <select id="compiler" name="compiler" class="form-control">
+                                    <option value="GCC">C (gcc 4.8)</option>
+                                    <option value="G++">C++ (g++ 4.8)</option>
+                                    <option value="JAVAC">Java (javac 1.8)</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="col-md-9 col-lg-9">
-                            <select id="compiler" name="compiler" class="form-control">
-                                <option value="GCC">C (gcc 4.8)</option>
-                                <option value="G++">C++ (g++ 4.8)</option>
-                                <option value="JAVAC">Java (javac 1.8)</option>
-                            </select>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-12 col-lg-12">
+                                <label>Your code:</label>
+                                <textarea class="form-control" name="code" id="code" cols="110" rows="40" wrap="hard" style="font-family: monospace"></textarea>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-3 col-lg-3">
+                                <button class="btn btn-primary" id="submit">Submit</button>
+                            </div>
+                            <label id="status" style="font-size: large; margin-top: 6px;">Status: Not Submitted</label>
                         </div>
                     </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-md-12 col-lg-12">
-                            <label>Your code:</label>
-                            <textarea class="form-control" name="code" id="code" cols="110" rows="40" wrap="hard" style="font-family: monospace"></textarea>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-md-3 col-lg-3">
-                            <button class="btn btn-primary" id="submit">Submit</button>
-                        </div>
-                        <label id="status" style="font-size: large; margin-top: 6px;">Status: Not Submitted</label>
-                    </div>
-                </div>
 
         </div>
     </div>
@@ -171,7 +171,7 @@
                     $.post("/Question",
                         {
                             username: "<%=(String)request.getSession().getAttribute("username")%>",
-                            code: $("#code").text(),
+                            code: $("#code").val(),
                             compiler: $("#compiler").val(),
                             pid: "<%=id%>"
                         },

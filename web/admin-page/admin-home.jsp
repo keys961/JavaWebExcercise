@@ -12,8 +12,8 @@
     String ref = "";
     if(cmd == null || cmd.equals("add"))
         ref = "add-problem.jsp";
-    else if(cmd.equals("modify"))
-        ref = "modify-problem.jsp";
+    else if(cmd.equals("delete"))
+        ref = "delete-problem.jsp";
     else
         ref = "add-problem.jsp";
 %>
@@ -32,7 +32,7 @@
                     <a href="/AdminHome?page=add">Add Question</a>
                 </li>
                 <li>
-                    <a href="/AdminHome?page=modify">Modify Question</a>
+                    <a href="/AdminHome?page=delete">Delete Question</a>
                 </li>
             </ul>
         </div>

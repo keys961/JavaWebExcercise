@@ -37,7 +37,10 @@ public class Question extends HttpServlet
 
         String username = (String)req.getSession().getAttribute("username");
         String compiler = req.getParameter("compiler");
-        int pid = Integer.parseInt(req.getParameter("pid"));
+        String spid = req.getParameter("pid");
+        if(spid == null)
+            return;
+        int pid = Integer.parseInt(spid);
         Judge judge = null;
         Judge.Status res = null;
         switch (compiler)

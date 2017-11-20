@@ -37,7 +37,8 @@ public class CJudge extends Judge
                 file.createNewFile();
 
             PrintWriter writer = new PrintWriter(file);
-            writer.write(code);
+            writer.print(code);
+            writer.flush();
             writer.close();
         }
         catch (IOException e)
